@@ -1,7 +1,7 @@
 # Личный проект «TaskForce»
 
 * Студент: [Татьяна Ерофеева](https://up.htmlacademy.ru/nodejs-2/3/user/1984323).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Вохмянин](https://htmlacademy.ru/profile/id530823).
 
 ---
 
