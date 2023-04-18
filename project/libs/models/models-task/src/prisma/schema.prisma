@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../../../../../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -11,15 +12,40 @@ datasource db {
 }
 
 model Task {
-  taskId      Int       @id @default(autoincrement())
-  title       String    @default("")
-  description String    @default("")
-  category    String    @default("")
-  cost        Int?      @default(0)
-  dueDate     DateTime? @default(now())
-  picture     String?   @default("")
-  address     String?   @default("")
-  tagSet      String?   @default("")
-  city        String?   @default("")
-  userId      String?   @default("")
+  taskId          Int           @id @default(autoincrement())  @map("task_id")
+  title           String        @default("")
+  description     String        @default("")
+  category        Category      @relation(fields: [categoryName], references: [title])
+  categoryName    String        @map("category_name")
+  cost            Int?          
+  dueDate         DateTime?     @map("due_date")
+  createdAt       DateTime      @default(now())  @map("created_at")
+  status          String?
+  picture         String?       
+  address         String?       
+  tagSet          String[]      @map("tag_set")
+  city            String?       
+  userId          String?       @map("user_id")
+  comments        Comment[]
+
+  @@map("tasks")
+}
+
+model Category {
+  categoryId      Int            @id @default(autoincrement()) @map("category_id")
+  title           String         @unique
+  tasks           Task[]         
+
+  @@map("categories")
+}
+
+model Comment {
+  commentId       Int            @id @default(autoincrement()) @map("comment_id")
+  createdAt       DateTime       @default(now())  @map("created_at")
+  message         String
+  userId          String         @map("user_id")
+  task            Task           @relation(fields: [taskId], references: [taskId], onDelete: Cascade)
+  taskId          Int            @map("task_id")
+
+  @@map("comments")
 }
