@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CRUDRepository } from '@project/util/util-types';
 import { TaskEntity } from './task.entity';
-import { Task } from '@project/shared/app-types';
+import { SortOrder, SortType, Task} from '@project/shared/app-types';
 import { PrismaService } from '../prisma/prisma.service';
+import { TaskQuery } from './query/task.query';
 
 @Injectable()
 export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> {
@@ -55,12 +56,27 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
         });
     }
 
-    public find(): Promise<Task[]> {
+    public find({ categoryId, status, city, sortDirection, sortType, limit, page }: TaskQuery):Promise<Task[]>{
+        sortDirection = sortDirection ?? SortOrder.Descended;
+        sortType = sortType ?? SortType.CreatedAt;
+
         return this.prisma.task.findMany({
+            where: {
+                status: status,
+                city: city,
+                category: { categoryId },
+            },      
+            take: limit,
             include: {
                 comments: true,
-                category: true
-            }
+                category: true,
+            },
+            orderBy: [
+                {
+                    [sortType]: sortDirection,
+                },
+            ],
+            skip: page > 0 ? limit * (page - 1) : undefined,
         });
     }
 

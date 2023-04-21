@@ -12,7 +12,7 @@ export interface Task {
     status: string;
     picture?: string;
     address?:string;  
-    tagsSet?: string[];
+    tagSet?: string[];
     city: string;
     userId: string;
     comments?: Comment[];   

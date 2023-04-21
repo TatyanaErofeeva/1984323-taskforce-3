@@ -7,8 +7,9 @@ Content-Type: application/json
   "description": "Текст анонса",
   "userId": "13",
   "category": {
-    "title": "Что-то новое"
+    "title": "Снова новое"
   },
+  "tagSet":"['новое', 'для тебя']",
   "cost": 2000,
   "status": "Новое",
   "city": "Москва"
@@ -37,5 +38,10 @@ Content-Type: application/json
 {
   "title": "Новый заголовок"
 }
+
+###
+
+# Get all tasks and filtres
+GET http://localhost:3333/api/tasks?city=Владивосток&categoryId=2&limit=6&page=1 HTTP/1.1
 
 ###

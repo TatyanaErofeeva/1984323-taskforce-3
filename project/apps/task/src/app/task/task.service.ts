@@ -6,6 +6,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './task.entity';
 import { fillObject } from '@project/util/util-core';
 import { TaskRdo } from './rdo/task.rdo';
+import { TaskQuery } from './query/task.query';
 
 @Injectable()
 export class TaskService {
@@ -17,8 +18,7 @@ export class TaskService {
         const task = { ...createTaskDto};
         const taskEntity = new TaskEntity(task);
         const newTask = await this.taskRepository.create(taskEntity);
-
-        console.log(newTask)
+        
         return fillObject(TaskRdo, newTask);
     }
 
@@ -30,8 +30,8 @@ export class TaskService {
         return this.taskRepository.findById(id);
     }
 
-    async getTasks(): Promise<Task[]> {
-        return this.taskRepository.find();
+    async getTasks(query: TaskQuery): Promise<Task[]> {
+        return this.taskRepository.find(query);
     }
 
     async updateTask(_id: number, _dto: UpdateTaskDto): Promise<Task> {

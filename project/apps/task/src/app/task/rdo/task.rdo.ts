@@ -3,7 +3,7 @@ import { Expose } from 'class-transformer';
 
 export class TaskRdo {
     @Expose()
-    public id: string;
+    public taskId: number;
 
     @Expose()
     public title: string;
@@ -33,11 +33,14 @@ export class TaskRdo {
     public address: string;
 
     @Expose()
-    public tagsSet: string[];
+    public tagSet: string[];
 
     @Expose()
     public city: string;
 
     @Expose()
     public userId: string;
+
+    @Expose()
+    public comments?: number[];
 }

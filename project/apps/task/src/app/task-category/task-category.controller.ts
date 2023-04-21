@@ -12,9 +12,8 @@ export class TaskCategoryController {
     ) { }
 
     @Get('/:id')
-    async show(@Param('id') id: string) {
-        const categoryId = parseInt(id, 10);
-        const existCategory = await this.taskCategoryService.getCategory(categoryId);
+    async show(@Param('id') id: number) {
+        const existCategory = await this.taskCategoryService.getCategory(id);
         return fillObject(CategoryRdo, existCategory);
     }
 
@@ -27,21 +26,18 @@ export class TaskCategoryController {
     @Post('/')
     async create(@Body() dto: CreateCategoryDto) {
         const newCategory = await this.taskCategoryService.createCategory(dto);
-        console.log(newCategory)
         return fillObject(CategoryRdo, newCategory);
     }
 
     @Delete('/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    async destroy(@Param('id') id: string) {
-        const categoryId = parseInt(id, 10);
-        this.taskCategoryService.deleteCategory(categoryId);
+    async destroy(@Param('id') id: number) {
+        this.taskCategoryService.deleteCategory(id);
     }
 
     @Patch('/:id')
-    async update(@Param('id') id: string, @Body() dto: UpdateCategoryDto) {
-        const categoryId = parseInt(id, 10);
-        const updatedCategory = await this.taskCategoryService.updateCategory(categoryId, dto)
+    async update(@Param('id') id: number, @Body() dto: UpdateCategoryDto) {
+        const updatedCategory = await this.taskCategoryService.updateCategory(id, dto)
         return fillObject(CategoryRdo, updatedCategory);
     }
 }

@@ -10,7 +10,7 @@ export class CreateTaskDto {
     public status: string;
     public picture?: string;
     public address?: string;
-    public tagsSet?: string[];
+    public tagSet?: string[];
     public city: string;
     public userId: string;
 }

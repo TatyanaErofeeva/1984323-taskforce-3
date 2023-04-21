@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { fillObject } from '@project/util/util-core';
 import { TaskRdo } from './rdo/task.rdo';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { TaskQuery } from './query/task.query';
 
 @Controller('tasks')
 export class TaskController {
@@ -12,15 +13,14 @@ export class TaskController {
     ) { }
 
     @Get('/:id')
-    async show(@Param('id') id: string) {
-        const taskId = parseInt(id, 10);
-        const task = await this.taskService.getTask(taskId);
+    async show(@Param('id') id: number) {
+        const task = await this.taskService.getTask(id);
         return fillObject(TaskRdo, task);
     }
 
     @Get('/')
-    async index() {
-        const tasks = await this.taskService.getTasks();
+    async index(@Query() query: TaskQuery) {
+        const tasks = await this.taskService.getTasks(query);
         return fillObject(TaskRdo, tasks);
     }
 
@@ -32,15 +32,13 @@ export class TaskController {
 
     @Delete('/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    async destroy(@Param('id') id: string) {
-        const taskId = parseInt(id, 10);
-        this.taskService.deleteTask(taskId);
+    async destroy(@Param('id') id: number) {
+        this.taskService.deleteTask(id);
     }
 
     @Patch('/:id')
-    async update(@Param('id') id: string, @Body() dto: UpdateTaskDto) {
-        const taskId = parseInt(id, 10);
-        const updatedTask = await this.taskService.updateTask(taskId, dto);
+    async update(@Param('id') id: number, @Body() dto: UpdateTaskDto) {
+        const updatedTask = await this.taskService.updateTask(id, dto);
         return fillObject(TaskRdo, updatedTask)
     }
 }

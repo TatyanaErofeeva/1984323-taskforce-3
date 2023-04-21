@@ -12,7 +12,7 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
     public status: string;
     public picture?: string;
     public address?: string;
-    public tagsSet?: string[];
+    public tagSet?: string[];
     public city: string;
     public userId: string;
     public comments?: Comment[];
@@ -32,14 +32,18 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
         this.status = entity.status;
         this.picture = entity?.picture;
         this.address = entity?.address;
-        this.tagsSet = entity.tagsSet;
+        this.tagSet = entity.tagSet;
         this.city = entity.city;
         this.userId = entity.userId;
         this.comments = [];
     }
 
     public toObject(): TaskEntity {
-        return { ...this };
+        return {
+            ...this,
+            category: this.category,
+            comments: [...this.comments],
+        };
     }
 
 }
