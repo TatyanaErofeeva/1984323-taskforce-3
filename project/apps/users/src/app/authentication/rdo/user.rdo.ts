@@ -32,7 +32,7 @@ export class UserRdo {
     public email: string;
 
     @ApiProperty({
-        description: 'User Firstname and Lastnamee',
+        description: 'User Fullname',
         example: 'Ivan Ivanov'
     })
     @Expose()

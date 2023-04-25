@@ -8,7 +8,7 @@ export interface Task {
     category: Category;
     cost?: number;
     dueDate?: Date;
-    createdAt: Date;
+    createdAt?: Date;
     status: string;
     picture?: string;
     address?:string;  

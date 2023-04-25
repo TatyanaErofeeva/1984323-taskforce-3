@@ -4,7 +4,7 @@ import { AUTH_USER_DATE_BIRTH_NOT_VALID, AUTH_USER_EMAIL_NOT_VALID } from '../au
 
 export class CreateUserDto {
     @ApiProperty({
-        description: 'User Firstname and Lastname',
+        description: 'User Fullname',
         example: 'Ivan Ivanov',
     })
     @IsString()
