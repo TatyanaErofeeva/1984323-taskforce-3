@@ -38,7 +38,7 @@ export class UserRdo {
     @Expose()
     public fullname: string;
 
-    
+
     @ApiProperty({
         description: 'User city. Can be only one from the list: Москва, Санкт-Петербург, Владивосток',
         example: 'Москва'

@@ -1,4 +1,4 @@
-import { User, UserRole } from '@project/shared/app-types';
+import { User, UserRole, Response} from '@project/shared/app-types';
 import { compare, genSalt, hash } from 'bcrypt';
 import { SALT_ROUNDS } from './blog-user.constant';
 
@@ -11,6 +11,7 @@ export class BlogUserEntity implements User {
     public role: UserRole;
     public avatar: string;
     public dateBirth: Date;
+    public _responses: Response[];
 
     constructor(blogUser: User) {
         this.fillEntity(blogUser);
@@ -28,7 +29,8 @@ export class BlogUserEntity implements User {
         this.passwordHash = blogUser.passwordHash;
         this.role = blogUser.role;
         this.avatar = blogUser.avatar;
-        this.dateBirth = blogUser.dateBirth;    
+        this.dateBirth = blogUser.dateBirth;
+        this._responses = blogUser._responses;   
     }
 
     public async setPassword(password: string): Promise<BlogUserEntity> {
