@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { User, UserRole } from '@project/shared/app-types';
+import { User, UserRole, Response } from '@project/shared/app-types';
 
 @Schema({
     collection: 'users',
@@ -43,6 +43,9 @@ export class BlogUserModel extends Document implements User {
         default: UserRole.Agent,
     })
     public role: UserRole;
+
+    @Prop()
+    public _responses?: Response[];
 }
 
 export const BlogUserSchema = SchemaFactory.createForClass(BlogUserModel);

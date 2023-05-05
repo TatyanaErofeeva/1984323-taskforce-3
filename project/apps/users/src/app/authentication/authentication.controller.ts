@@ -1,14 +1,18 @@
-import { Body, Controller, Post, Get, Param, UseGuards, HttpCode, HttpStatus, } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, UseGuards, Req, HttpCode, HttpStatus, Patch, Put, } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { fillObject } from '@project/util/util-core';
 import { UserRdo } from './rdo/user.rdo';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
-import { LoginUserDto } from './dto/login-user.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { NotifyService } from '../notify/notify.service';
+import { LocalAuthGuard } from './guards/local-auth-guard';
+import { RequestWithUser } from '@project/shared/app-types';
+import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
+import UpdateUserPasswordDto from './dto/update-password.dto';
+import { ResponseDto } from './dto/response-user.dto';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -30,6 +34,7 @@ export class AuthenticationController {
         return fillObject(UserRdo, newUser);
     }
 
+    @UseGuards(LocalAuthGuard)
     @ApiResponse({
         type: LoggedUserRdo,
         status: HttpStatus.OK,
@@ -41,10 +46,8 @@ export class AuthenticationController {
     })
     @Post('login')
     @HttpCode(HttpStatus.OK)
-    public async login(@Body() dto: LoginUserDto) {
-        const verifiedUser = await this.authService.verifyUser(dto);
-        const loggedUser = await this.authService.createUserToken(verifiedUser);
-        return fillObject(LoggedUserRdo, Object.assign(verifiedUser, loggedUser));
+    public async login(@Req() { user }: RequestWithUser) {
+        return this.authService.createUserToken(user);
     }
 
     @ApiResponse({
@@ -57,5 +60,37 @@ export class AuthenticationController {
     public async show(@Param('id', MongoidValidationPipe) id: string) {
         const existUser = await this.authService.getUser(id);
         return fillObject(UserRdo, existUser);
+    }
+
+    @UseGuards(JwtRefreshGuard)
+    @Post('refresh')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Get a new access/refresh tokens'
+    })
+    public async refreshToken(@Req() { user }: RequestWithUser) {
+        return this.authService.createUserToken(user);
+    }
+
+    @ApiResponse({
+        type: LoggedUserRdo,
+        status: HttpStatus.OK,
+        description: 'User password has been successfully updated'
+    })
+    @Patch('password')
+    @UseGuards(JwtAuthGuard)
+    public async updateUserPassword(id: string, @Body() dto: UpdateUserPasswordDto) {
+        const updatedUser = await this.authService.updatePassword(id, dto);
+        return fillObject(UserRdo, updatedUser);
+    }
+
+    @ApiResponse({
+        status: HttpStatus.OK,
+    })
+    @Put(':id/response')
+    async addResponse(@Param('id') id: string, @Body() responseDto: ResponseDto) {
+        const userResponse = await this.authService.addResponse(id, responseDto);
+        return fillObject(UserRdo, userResponse);
     }
 }
