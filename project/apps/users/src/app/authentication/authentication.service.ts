@@ -104,11 +104,11 @@ export class AuthenticationService {
         if (!existUser) {
             throw new Error(AUTH_USER_NOT_FOUND);
         }
-
+        existUser._responses??=[];
         existUser._responses.push(responseDto);
         console.log({responseDto})
 
-        const taskUserEntity = await new BlogUserEntity(existUser);
+        const taskUserEntity = new BlogUserEntity(existUser);
         console.log(this.blogUserRepository.update(id, taskUserEntity))
         await this.blogUserRepository.update(id, taskUserEntity);
     }

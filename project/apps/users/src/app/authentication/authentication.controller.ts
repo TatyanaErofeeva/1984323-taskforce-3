@@ -88,7 +88,7 @@ export class AuthenticationController {
     @ApiResponse({
         status: HttpStatus.OK,
     })
-    @Put(`':id'/response`)
+    @Put(':id/response')
     async addResponse(@Param('id') id: string, @Body() responseDto: ResponseDto) {
         const userResponse = await this.authService.addResponse(id, responseDto);
         return fillObject(UserRdo, userResponse);

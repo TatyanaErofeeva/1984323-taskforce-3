@@ -48,11 +48,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDQ3YTc4N
 ###
 # Leave response user by ID
 PUT  http://localhost:3333/api/auth/6453d4d61dd23f0ba66e23bb/response HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDUzZDRkNjFkZDIzZjBiYTY2ZTIzYmIiLCJlbWFpbCI6Imtla3NAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoi0JjRgdC_0L7Qu9C90LjRgtC10LvRjCIsImZ1bGxuYW1lIjoiS2VrcyIsImlhdCI6MTY4MzIxNjA0MCwiZXhwIjoxNjgzMjE2NjQwfQ.w4Rv64cD0Ayo71P2AF7yfjVIJQAFVvDRlL88rMIvlIE
+Authorization: Bearer Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDUzZDRkNjFkZDIzZjBiYTY2ZTIzYmIiLCJlbWFpbCI6Imtla3NAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoi0JjRgdC_0L7Qu9C90LjRgtC10LvRjCIsImZ1bGxuYW1lIjoiS2VrcyIsImlhdCI6MTY4MzIyNjY0NCwiZXhwIjoxNjgzMjI3MjQ0fQ.NMPHki6GmUDajd2f99_RCSKFx5v9bOnHt3cVqS7iP9c
 Content-Type: application/json
 
 {
-  "text": "reterjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjtretghghjghghghghghjghjghjghghghjghjg",
+  "text": "reterjjjjjjjjjjjjtretghghjghghghghghjghjghjghghghjghjg",
   "idCompletedTask": "ewr234231ds",
   "score": 5
 }
