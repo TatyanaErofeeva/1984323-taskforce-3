@@ -35,9 +35,24 @@ export class BlogUserRepository implements CRUDRepository<BlogUserEntity, string
             .exec();
     }
 
-    public async update(id: string, item: BlogUserEntity): Promise<User> {
-        console.log({item})
+    public async findManyByIdsList(userIds: string[]): Promise<User[]> {
+        return this.blogUserModel
+            .find({
+                '_id': { $in: userIds }
+            }
+            )
+            .exec();
+    }
 
+    public async findAllSortedByRating(): Promise<User[]> {
+        return this.blogUserModel
+            .find({})
+            .select('rating')
+            .sort({ rating: -1 })
+            .exec();
+    }
+
+    public async update(id: string, item: BlogUserEntity): Promise<User> {
         return this.blogUserModel
             .findByIdAndUpdate(id, item.toObject(), { new: true })
             .exec();

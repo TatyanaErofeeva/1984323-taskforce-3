@@ -1,0 +1,24 @@
+# Update user
+PATCH  http://localhost:3333/api/user/update/64579694073440c965030b6f HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDU3OTY5NDA3MzQ0MGM5NjUwMzBiNmYiLCJlbWFpbCI6InNobWVrc0Bub3Rmb3VuZC5sb2NhbCIsInJvbGUiOiLQl9Cw0LrQsNC30YfQuNC6IiwiZnVsbG5hbWUiOiJLZWtzIFNpZG9yb3YiLCJpYXQiOjE2ODM0NjE4MDAsImV4cCI6MTY4MzQ2MjQwMH0.d-cTL7AxIQWiRo7z5B1srh-mcqdi_DoTun9NwemVLfY
+
+{
+  "dateBirth": "2003-03-03",
+  "fullname": "Keks Petrov",
+  "city": "Москва",
+  "specialization": "Водитель",
+  "selfInfo": "info"
+}
+
+###
+
+# Get user by ID customer
+GET http://localhost:3333/api/user/customer/64576f6483741d5efe4231bf HTTP/1.1
+
+###
+
+# Get user by ID agent
+GET http://localhost:3333/api/user/agent/645774277cb3abbffcf29ac4 HTTP/1.1
+
+###

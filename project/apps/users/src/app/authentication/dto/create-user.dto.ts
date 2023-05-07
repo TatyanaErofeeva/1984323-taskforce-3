@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsISO8601, IsString, Length } from 'class-validator';
 import { AUTH_USER_DATE_BIRTH_NOT_VALID, AUTH_USER_EMAIL_NOT_VALID, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH } from '../authentication.constant';
+import { Response, UserRole } from '@project/shared/app-types';
 
 export class CreateUserDto {
     @ApiProperty({
@@ -39,4 +40,64 @@ export class CreateUserDto {
     @IsString()
     public city: string;
 
+    @ApiProperty({
+        description: 'User role',
+        example: 'customer'
+    })
+    @IsString()
+    public role: UserRole;
+
+    @ApiProperty({
+        description: 'registrationDate role',
+        example: '2022-03-03'
+    })
+    public registrationDate: Date;
+
+    @ApiProperty({
+        description: 'quantityPublishedTask',
+        example: 3
+    })
+    public quantityPublishedTask?: number;
+
+    @ApiProperty({
+        description: 'quantityNewTask',
+        example: 3
+    })
+    public quantityNewTask?: number;
+
+    @ApiProperty({
+        description: 'quantityFailedTask',
+        example: 3
+    })
+    public quantityFailedTask?: number;
+
+    @ApiProperty({
+        description: 'selfInfo',
+        example: 'info about user'
+    })
+    public selfInfo?: string;
+
+    @ApiProperty({
+        description: 'rating',
+        example: 3
+    })
+    public rating?: number;
+
+    @ApiProperty({
+        description: 'specialization',
+        example: 'работник'
+    })
+     specialization?: string;
+
+    @ApiProperty({
+        description: 'placeInRating',
+        example: 3
+    })
+    public placeInRating?: number;
+
+    @ApiProperty({
+        description: 'User responses',
+        example: 'something'
+    })
+    public _responses: Response;
 }

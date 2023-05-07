@@ -45,6 +45,30 @@ export class BlogUserModel extends Document implements User {
     public role: UserRole;
 
     @Prop()
+    public registrationDate: Date;
+
+    @Prop()
+    public quantityPublishedTask: number;
+
+    @Prop()
+    public quantityNewTask: number;
+    
+    @Prop()
+    public quantityFailedTask: number;
+
+    @Prop()
+    public selfInfo: string;
+
+    @Prop()
+    public rating: number;
+
+    @Prop()
+    public specialization: string;
+
+    @Prop()
+    public placeInRating: number;
+
+    @Prop()
     public _responses?: Response[];
 }
 

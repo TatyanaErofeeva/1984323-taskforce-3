@@ -14,7 +14,7 @@ import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import UpdateUserPasswordDto from './dto/update-password.dto';
 import { ResponseDto } from './dto/response-user.dto';
 
-@ApiTags('authentication')
+@ApiTags('authentification')
 @Controller('auth')
 export class AuthenticationController {
     constructor(

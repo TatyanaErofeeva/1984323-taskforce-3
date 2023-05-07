@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, NotFoundException, Inject, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ResponseDto } from './dto/response-user.dto';
-import { User, UserRole } from '@project/shared/app-types';
+import { User} from '@project/shared/app-types';
 import * as dayjs from 'dayjs';
 import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from './authentication.constant';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
@@ -25,12 +25,24 @@ export class AuthenticationService {
         private readonly refreshTokenService: RefreshTokenService,
     ) {}
     public async register(dto: CreateUserDto) {
-        const { email, fullname, password, dateBirth, city } = dto;
+        const { email, fullname, password, dateBirth, city, role } = dto;
 
         const blogUser = {
-            email, fullname, city, role: UserRole.Agent,
-            avatar: '', dateBirth: dayjs(dateBirth).toDate(),
-            passwordHash: ''
+            email,
+            fullname,
+            city,
+            role,
+            avatar: '',
+            dateBirth: dayjs(dateBirth).toDate(),
+            passwordHash: '',
+            registrationDate: dayjs().toDate(),
+            quantityPublishedTask: 0,
+            quantityNewTask: 0,
+            quantityFailedTask: 0,
+            selfInfo: '',
+            rating: 0,
+            specialization: '',
+            placeInRating: 0,    
         };
 
         const existUser = await this.blogUserRepository
@@ -81,7 +93,7 @@ export class AuthenticationService {
         }
     }
 
-    async updatePassword(_id: string, dto: UpdateUserPasswordDto) {
+    public async updatePassword(_id: string, dto: UpdateUserPasswordDto) {
         const {
             email, currentPassword, newPassword,
         } = dto;
@@ -99,17 +111,22 @@ export class AuthenticationService {
 
     public async addResponse(id: string, responseDto: ResponseDto) {
         const existUser = await this.blogUserRepository.findById(id);
-        console.log({ existUser })
 
         if (!existUser) {
             throw new Error(AUTH_USER_NOT_FOUND);
         }
         existUser._responses??=[];
         existUser._responses.push(responseDto);
-        console.log({responseDto})
 
         const taskUserEntity = new BlogUserEntity(existUser);
-        console.log(this.blogUserRepository.update(id, taskUserEntity))
         await this.blogUserRepository.update(id, taskUserEntity);
+    }
+
+    public async getByEmail(email: string): Promise<User | null> {
+        const existUser = await this.blogUserRepository.findByEmail(email);
+        if (!existUser) {
+            throw new NotFoundException(AUTH_USER_NOT_FOUND);
+        }
+        return existUser;
     }
 }
