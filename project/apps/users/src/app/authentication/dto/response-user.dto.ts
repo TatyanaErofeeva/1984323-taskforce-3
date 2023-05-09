@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, Length, Max, Min } from 'class-validator';
-import { RESPONSE_TEXT_LENGTH_MIN, RESPONSE_TEXT_LENGTH_MAX, SCORE_MIN, SCORE_MAX } from '../authentication.constant';
+import {ValidateCondition} from '../authentication.constant';
 
 export class ResponseDto {
     @ApiProperty({
         description: 'Текст отзыва',
         example: 'Спасибо'
     })
-    @Length(RESPONSE_TEXT_LENGTH_MIN, RESPONSE_TEXT_LENGTH_MAX)
+    @Length(ValidateCondition.MinResponseTextLength, ValidateCondition.MaxResponseTextLength)
     text: string;
 
     @ApiProperty({
@@ -21,7 +21,7 @@ export class ResponseDto {
         description: 'Оценка',
         example: '5'
     })
-    @Min(SCORE_MIN)
-    @Max(SCORE_MAX)
+    @Min(ValidateCondition.MinScore)
+    @Max(ValidateCondition.MaxScore)
     score: number;
 }

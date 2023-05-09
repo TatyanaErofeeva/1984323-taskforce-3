@@ -1,11 +1,16 @@
-export const AUTH_USER_EXISTS = 'User with this email exists';
-export const AUTH_USER_NOT_FOUND = 'User not found';
-export const AUTH_USER_PASSWORD_WRONG = 'User password is wrong';
-export const AUTH_USER_EMAIL_NOT_VALID = 'The email is not valid';
-export const AUTH_USER_DATE_BIRTH_NOT_VALID = 'The user date birth is not valid';
-export const MIN_PASSWORD_LENGTH = 6;
-export const MAX_PASSWORD_LENGTH = 12;
-export const RESPONSE_TEXT_LENGTH_MIN = 50;
-export const RESPONSE_TEXT_LENGTH_MAX = 500;
-export const SCORE_MIN = 1;
-export const SCORE_MAX = 5;
+export enum AuthUser {
+    Exist = 'User with this email exists',
+    NotFound = 'User not found',
+    PasswordWrong = 'User password is wrong',
+    EmailNotValid = 'The email is not valid',
+    DateBirthNotValid = 'The user date birth is not valid',
+}
+
+export enum ValidateCondition {
+    MinPasswordLength = 6,
+    MaxPasswordLength = 12,
+    MinResponseTextLength = 50,
+    MaxResponseTextLength = 500,
+    MinScore = 1,
+    MaxScore = 5
+}

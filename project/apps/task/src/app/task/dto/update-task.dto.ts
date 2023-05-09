@@ -1,14 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsDate, IsEnum, IsNumber, IsOptional, IsString, Length, Min, MinDate } from 'class-validator';
-import {
-    MIN_DESCRIPTION_LENGTH,
-    MAX_DESCRIPTION_LENGTH,
-    MIN_TITLE_LENGTH,
-    MAX_TITLE_LENGTH,
-    MIN_COST,
-    MIN_ADDRESS_LENGTH,
-    MAX_ADDRESS_LENGTH
-} from '../task.constant';
+import {TaskValidateCondition} from '../task.constant';
 import { Category, City } from "@project/shared/app-types";
 import { Transform } from 'class-transformer';
 
@@ -18,7 +10,7 @@ export class UpdateTaskDto {
         example: 'Забить гвоздь'
     })
     @IsString()
-    @Length(MIN_TITLE_LENGTH, MAX_TITLE_LENGTH)
+    @Length(TaskValidateCondition.MinTitleLength, TaskValidateCondition.MaxTitleLength)
     public title?: string;
 
     @ApiProperty({
@@ -26,7 +18,7 @@ export class UpdateTaskDto {
         example: 'Нужно забить гвоздь, чтобы повесить картину'
     })
     @IsString()
-    @Length(MIN_DESCRIPTION_LENGTH, MAX_DESCRIPTION_LENGTH)
+    @Length(TaskValidateCondition.MinDescriptionLength, TaskValidateCondition.MaxDescriptionLength)
     public description?: string;
 
     @ApiProperty({
@@ -41,7 +33,7 @@ export class UpdateTaskDto {
     })
     @IsOptional()
     @IsNumber()
-    @Min(MIN_COST)
+    @Min(TaskValidateCondition.MinCost)
     public cost?: number;
 
     @ApiProperty({
@@ -69,7 +61,7 @@ export class UpdateTaskDto {
     })
     @IsOptional()
     @IsString()
-    @Length(MIN_ADDRESS_LENGTH, MAX_ADDRESS_LENGTH)
+    @Length(TaskValidateCondition.MinAddressLength, TaskValidateCondition.MaxAddressLength)
     public address?: string;
 
     @ApiProperty({

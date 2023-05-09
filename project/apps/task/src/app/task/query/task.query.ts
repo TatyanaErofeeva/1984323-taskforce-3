@@ -1,6 +1,6 @@
 import { IsEnum, IsIn, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { DEFAULT_TASK_COUNT_LIMIT, DEFAULT_SORT_ORDER, DEFAULT_SORT_TYPE, DEFAULT_PAGINATION_COUNT } from '../task.constant';
+import {DefaultData} from '../task.constant';
 import { SortType, TaskStatus, City, SortOrder } from '@project/shared/app-types';
 
 export class TaskQuery {
@@ -20,17 +20,17 @@ export class TaskQuery {
 
     @IsIn(['asc', 'desc'])
     @IsOptional()
-    public sortDirection?: SortOrder = DEFAULT_SORT_ORDER;
+    public sortDirection?: SortOrder = SortOrder.Descended;
 
     @IsIn(['createdAt', 'popularTasks', 'commentsCount'])
     @IsOptional()
-    public sortType?: SortType = DEFAULT_SORT_TYPE;
+    public sortType?: SortType = SortType.CreatedAt;
 
     @IsOptional()
     @Transform(({ value }) => +value)
-    public limit?: number = DEFAULT_TASK_COUNT_LIMIT;
+    public limit?: number = DefaultData.TaskCountLimit;
 
     @IsOptional()
     @Transform(({ value }) => +value)
-    public page?: number = DEFAULT_PAGINATION_COUNT;
+    public page?: number = DefaultData.PaginationCount;
 }

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsISO8601, IsString } from 'class-validator';
-import { AUTH_USER_DATE_BIRTH_NOT_VALID } from '../../authentication/authentication.constant';
+import { AuthUser } from '../../authentication/authentication.constant';
 import { City } from '@project/shared/app-types';
 
 export class UpdateUserDto {
@@ -16,7 +16,7 @@ export class UpdateUserDto {
         description: 'User birth date',
         example: '1981-03-12',
     })
-    @IsISO8601({}, { message: AUTH_USER_DATE_BIRTH_NOT_VALID })
+    @IsISO8601({}, { message: AuthUser.DateBirthNotValid })
     public dateBirth?: Date;
 
     @ApiProperty({

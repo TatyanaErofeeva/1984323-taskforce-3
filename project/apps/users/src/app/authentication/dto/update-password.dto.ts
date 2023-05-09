@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Length } from 'class-validator';
-import { MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH } from '../authentication.constant';
+import { ValidateCondition } from '../authentication.constant';
 
 export default class UpdateUserPasswordDto {
     @ApiProperty({
@@ -13,13 +13,13 @@ export default class UpdateUserPasswordDto {
         description: 'User current password',
         example: '123456'
     })
-    @Length(MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH)
+    @Length(ValidateCondition.MinPasswordLength,ValidateCondition.MaxPasswordLength)
     public currentPassword: string;
 
     @ApiProperty({
         description: 'User new password',
         example: ':sladksod'
     })
-    @Length(MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH)
+    @Length(ValidateCondition.MinPasswordLength, ValidateCondition.MaxPasswordLength)
     public newPassword: string;
 }

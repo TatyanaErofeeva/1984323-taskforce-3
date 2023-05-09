@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { ResponseDto } from './dto/response-user.dto';
 import { User} from '@project/shared/app-types';
 import * as dayjs from 'dayjs';
-import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from './authentication.constant';
+import { AuthUser } from './authentication.constant';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { ConfigService, ConfigType } from '@nestjs/config';
@@ -49,7 +49,7 @@ export class AuthenticationService {
             .findByEmail(email);
 
         if (existUser) {
-            throw new ConflictException(AUTH_USER_EXISTS);
+            throw new ConflictException(AuthUser.Exist);
         }
 
         const userEntity = await new BlogUserEntity(blogUser)
@@ -64,12 +64,12 @@ export class AuthenticationService {
         const existUser = await this.blogUserRepository.findByEmail(email);
 
         if (!existUser) {
-            throw new NotFoundException(AUTH_USER_NOT_FOUND);
+            throw new NotFoundException(AuthUser.NotFound);
         }
 
         const blogUserEntity = new BlogUserEntity(existUser);
         if (!await blogUserEntity.comparePassword(password)) {
-            throw new UnauthorizedException(AUTH_USER_PASSWORD_WRONG);
+            throw new UnauthorizedException(AuthUser.PasswordWrong);
         }
 
         return blogUserEntity.toObject();
@@ -113,7 +113,7 @@ export class AuthenticationService {
         const existUser = await this.blogUserRepository.findById(id);
 
         if (!existUser) {
-            throw new Error(AUTH_USER_NOT_FOUND);
+            throw new Error(AuthUser.NotFound);
         }
         existUser._responses??=[];
         existUser._responses.push(responseDto);
@@ -125,7 +125,7 @@ export class AuthenticationService {
     public async getByEmail(email: string): Promise<User | null> {
         const existUser = await this.blogUserRepository.findByEmail(email);
         if (!existUser) {
-            throw new NotFoundException(AUTH_USER_NOT_FOUND);
+            throw new NotFoundException(AuthUser.NotFound);
         }
         return existUser;
     }

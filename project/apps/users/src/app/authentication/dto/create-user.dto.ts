@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsISO8601, IsString, Length } from 'class-validator';
-import { AUTH_USER_DATE_BIRTH_NOT_VALID, AUTH_USER_EMAIL_NOT_VALID, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH } from '../authentication.constant';
+import {AuthUser, ValidateCondition } from '../authentication.constant';
 import { Response, UserRole } from '@project/shared/app-types';
 
 export class CreateUserDto {
@@ -15,14 +15,14 @@ export class CreateUserDto {
         description: 'User unique address',
         example: 'user@user.ru',
     })
-    @IsEmail({}, { message: AUTH_USER_EMAIL_NOT_VALID })
+    @IsEmail({}, { message: AuthUser.EmailNotValid })
     public email: string;
 
     @ApiProperty({
         description: 'User birth date',
         example: '1981-03-12',
     })
-    @IsISO8601({}, { message: AUTH_USER_DATE_BIRTH_NOT_VALID })
+    @IsISO8601({}, { message: AuthUser.DateBirthNotValid })
     public dateBirth: string;
 
     @ApiProperty({
@@ -30,7 +30,7 @@ export class CreateUserDto {
         example: '123456'
     })
     @IsString()
-    @Length(MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH)
+    @Length(ValidateCondition.MinPasswordLength, ValidateCondition.MaxPasswordLength)
     public password: string;
 
     @ApiProperty({

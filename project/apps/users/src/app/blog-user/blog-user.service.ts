@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AUTH_USER_NOT_FOUND } from '../authentication/authentication.constant';
+import { AuthUser } from '../authentication/authentication.constant';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { BlogUserEntity } from './blog-user.entity';
 import { BlogUserRepository } from './blog-user.repository';
@@ -14,7 +14,7 @@ export class BlogUserService {
     public async update(id: string, dto: UpdateUserDto) {
         const blogUser = await this.blogUserRepository.findById(id);
         if (!blogUser) {
-            throw new NotFoundException(AUTH_USER_NOT_FOUND);
+            throw new NotFoundException(AuthUser.NotFound);
         }
 
         const blogUserEntity = new BlogUserEntity({ ...blogUser, ...dto });

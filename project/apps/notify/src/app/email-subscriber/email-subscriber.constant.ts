@@ -1,3 +1,5 @@
-export const EMAIL_NOT_VALID = 'The email is not valid';
-export const FULL_NAME_IS_EMPTY = 'The fullname is empty';
-export const USER_ID_IS_EMPTY = 'The userId is empty';
+export enum Subscriber {
+    EmailNotValid = 'The email is not valid',
+    FullNameIsEmpty = 'The fullname is empty',
+    UserIdIsEmpty = 'The userId is empty'
+}
